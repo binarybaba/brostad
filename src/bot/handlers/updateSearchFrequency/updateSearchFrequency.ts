@@ -2,7 +2,7 @@ import bot from "../../getBot";
 import job from '../../../job/job'
 import { Message } from "node-telegram-bot-api";
 
-export const updateSearchFrequency: RegExp = /\/updateSearchFrequency (.+)/
+export const updateSearchFrequency: RegExp = /\/frequency (.+)/
 
 
 export const handleUpdateSearchFrequency = (msg: Message, match: RegExpExecArray | null) => {

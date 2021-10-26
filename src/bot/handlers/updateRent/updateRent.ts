@@ -2,7 +2,7 @@ import bot from "../../getBot";
 import { Message } from "node-telegram-bot-api";
 import searchFilters from "../../../filters/filters";
 
-export const updateRentCommand: RegExp = /\/updateRent (.+)/
+export const updateRentCommand: RegExp = /\/rent (.+)/
 
 
 export const handleUpdateRent = (msg: Message, match: RegExpExecArray | null) => {

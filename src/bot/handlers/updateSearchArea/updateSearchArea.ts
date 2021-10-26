@@ -2,7 +2,7 @@ import bot from "../../getBot";
 import { Message } from "node-telegram-bot-api";
 import searchFilters from "../../../filters/filters";
 
-export const updateSearchAreaCommand: RegExp = /\/updateSearchArea (.+)/
+export const updateSearchAreaCommand: RegExp = /\/searcharea (.+)/
 
 export const handleUpdateSearchAreaCommand = (msg: Message, match: RegExpExecArray | null) => {
     const chatId = msg.chat.id;
