@@ -5,6 +5,10 @@ class SearchFilters {
 
     filters: BLKSearchFilters
 
+    get() {
+        return this.filters;
+    }
+
     updateHousingArea(housingArea) {
         this.filters[Filter.BLK_area] = housingArea
         return this.filters
