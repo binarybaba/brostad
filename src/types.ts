@@ -16,7 +16,7 @@ export type BLKSearchFilters = {
     [Filter.BLK_area]: string,
 }
 
-export type Apartment = {
+export type Housing = {
     street: string,
     rent: string,
     kommune: string,

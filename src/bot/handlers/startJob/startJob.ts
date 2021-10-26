@@ -3,6 +3,8 @@ import job from "../../../job/job";
 import searchFilters from "../../../filters/filters";
 import { Message } from "node-telegram-bot-api";
 import { Filter } from "../../../types";
+import { scrapeSearchPage } from "../../../scrape";
+import { generateHousingReply } from './generateHousingReply'
 
 
 export const startJobCommand: RegExp = /^\/start$/;
@@ -16,10 +18,7 @@ Rooms: Minimum <b>${filters[Filter.BLK_numberOfRooms]}</b>
 Area: <b>${filters[Filter.BLK_area]} msq</b>
 Rent: <b>${filters[Filter.BLK_maxMonthlyCost]} SEK</b>
 
-This search is scheduled to run every ${job.milliseconds/60000} milliseconds. 
-Day and night.
-
-You're welcome.
+This search is scheduled to run every ${job.milliseconds/60000} minutes and will notify if something new pops up.
 `
 
 export const handleStartJob = (msg: Message) => {
@@ -32,7 +31,22 @@ export const handleStartJob = (msg: Message) => {
             parse_mode: "HTML",
         }
     );
-    job.startJob(() => {
-        bot.sendMessage(chatId,'Yo!')
+    bot.sendMessage(
+        '@brostadchannel',
+        getHtmlReply(currentFilters),
+        {
+            parse_mode: "HTML",
+        }
+    );
+    job.startJob(async () => {
+        const currentFilters = searchFilters.get();
+        const previousHousingList = job.getResults();
+        const housings = await scrapeSearchPage(currentFilters)
+        if (JSON.stringify(previousHousingList) !== JSON.stringify(housings)) { // terrible. but im in a hurry.
+            job.updateResults(housings)
+            bot.sendMessage('@brostadchannel', generateHousingReply(housings), {
+                parse_mode: 'HTML'
+            })
+        }
     })
 };

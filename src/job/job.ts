@@ -1,7 +1,10 @@
+import {Housing} from "../types";
+
 class Job {
   interval: NodeJS.Timer;
   isJobRunning: boolean = false;
-  milliseconds: number = 10000;
+  milliseconds: number = 1200000; // 20 minutes
+  results: Array<Housing> = []
   job: () => void;
 
   state() {
@@ -12,6 +15,10 @@ class Job {
     }
   }
 
+  getResults() {
+    return this.results;
+  }
+
   // for debugging only. If you wanna restart the job, use restart()
   // This makes the interval 10 seconds.
 
@@ -19,16 +26,17 @@ class Job {
     this.job = () => {};
     this.milliseconds = 10000;
     this.stopJob();
+    this.results = []
   }
 
   restart() {
     this.stopJob();
     this.startJob();
-
   }
 
   stopJob() {
     clearInterval(this.interval);
+    this.results = []
     this.isJobRunning = false;
   }
 
@@ -50,6 +58,10 @@ class Job {
       this.interval = setInterval(this.job, this.milliseconds);
       this.isJobRunning = true;
     }
+  }
+
+  updateResults(results) {
+    this.results = results;
   }
 
   constructor() {
