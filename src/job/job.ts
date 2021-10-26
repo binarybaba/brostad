@@ -1,7 +1,7 @@
 class Job {
   interval: NodeJS.Timer;
   isJobRunning: boolean = false;
-  milliseconds: number = 10000;
+  milliseconds: number = 20000;
   job: () => void;
 
   state() {

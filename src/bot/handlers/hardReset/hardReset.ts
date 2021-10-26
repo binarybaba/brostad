@@ -21,4 +21,4 @@ export const handleHardResetJob = (msg: Message) => {
     bot.sendMessage(chatId, reply, {
         parse_mode: "HTML"
     });
-}; // @ts-ignore
+};

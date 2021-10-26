@@ -3,6 +3,8 @@ import job from "../../../job/job";
 import searchFilters from "../../../filters/filters";
 import { Message } from "node-telegram-bot-api";
 import { Filter } from "../../../types";
+import { scrapeSearchPage } from "../../../scrape";
+import { generateHousingReply } from './generateHousingReply'
 
 
 export const startJobCommand: RegExp = /^\/start$/;
@@ -16,10 +18,8 @@ Rooms: Minimum <b>${filters[Filter.BLK_numberOfRooms]}</b>
 Area: <b>${filters[Filter.BLK_area]} msq</b>
 Rent: <b>${filters[Filter.BLK_maxMonthlyCost]} SEK</b>
 
-This search is scheduled to run every ${job.milliseconds/60000} milliseconds. 
+This search is scheduled to run every ${job.milliseconds} milliseconds. 
 Day and night.
-
-You're welcome.
 `
 
 export const handleStartJob = (msg: Message) => {
@@ -32,7 +32,12 @@ export const handleStartJob = (msg: Message) => {
             parse_mode: "HTML",
         }
     );
-    job.startJob(() => {
-        bot.sendMessage(chatId,'Yo!')
+    job.startJob(async () => {
+        const currentFilters = searchFilters.get();
+        const housings = await scrapeSearchPage(currentFilters)
+
+        bot.sendMessage(chatId,generateHousingReply(housings), {
+            parse_mode: 'HTML'
+        })
     })
 };

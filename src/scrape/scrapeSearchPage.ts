@@ -1,26 +1,25 @@
 import qs from "querystring";
 import puppeteer from "puppeteer";
 
-import { BLKSearchFilters, Apartment } from "../types";
-import { SEARCH_PAGE, BLK_RGX_SEARCH_PAGE_APARTMENT_HREF } from "../constants";
+import { BLKSearchFilters, Housing } from "../types";
+import { SEARCH_PAGE } from "../constants";
 
 /**
- * Fires up headless browser, pings and then gets back with a list of Apartments
+ * Fires up headless browser, pings and then gets back with a list of Housings
  * @param filters
- * @param regexpHref
  */
 export const scrapeSearchPage = async (
-  filters: BLKSearchFilters,
-  regexpHref = BLK_RGX_SEARCH_PAGE_APARTMENT_HREF
-): Promise<Array<Apartment>> => {
+  filters: BLKSearchFilters
+): Promise<Array<Housing>> => {
   try {
+
     const filtersInQueryString = qs.stringify(filters);
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
     await page.goto(`${SEARCH_PAGE}?${filtersInQueryString}`);
-    const apartments = await page.evaluate(() =>
+    const housings = await page.evaluate(() =>
       Array.prototype.filter // because DOM elements are NodeLists and normal Array functions cant apply directly
-        .call(document.querySelectorAll("a"), (a) => regexpHref.test(a.href))
+        .call(document.querySelectorAll("a"), (a) => /\/p2\/en\/home/.test(a.href))
         .map((DOMNode) => {
           const street = DOMNode.querySelector("h2").innerText;
           const area = DOMNode.querySelector("h5").innerText;
@@ -40,9 +39,9 @@ export const scrapeSearchPage = async (
         })
     );
     await browser.close();
-    return apartments;
+    return housings;
   } catch (e) {
-    throw e;
+    console.error(e);
   }
 };
 
