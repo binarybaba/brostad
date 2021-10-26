@@ -1,5 +1,5 @@
 {
-  "name": "Brostad",
+  "name": "brostad",
   "version": "1.0.0",
   "main": "index.js",
   "author": "binarybaba <amin.ajani17@gmail.com>",
@@ -15,6 +15,7 @@
     "qs": "^6.10.1"
   },
   "devDependencies": {
+    "@types/node-telegram-bot-api": "^0.53.1",
     "@types/puppeteer": "^5.4.4",
     "nodemon": "^2.0.14",
     "prettier": "^2.4.1",

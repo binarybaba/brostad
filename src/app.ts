@@ -1,33 +1,19 @@
-import TelegramBot from 'node-telegram-bot-api';
-import { BOT_TOKEN } from "./config/settings";
-import { scrapeSearchPage } from "./scrape";
-import { DEFUALT_BLK_SearchFilters } from "./config/settings";
-
-let timer;
+import * as Handlers  from './bot/handlers'
+import bot from "./bot/getBot";
 
 
 try {
-    const bot =  new TelegramBot(BOT_TOKEN, {polling: true});
-    bot.onText(/\/poll (.+)/, (msg, match) => {
-        const chatId = msg.chat.id;
-        const pollInterval = match[1];
-        timer = setInterval(async () => {
-            // scrapeSearchPage(DEFUALT_BLK_SearchFilters)
+    bot.onText(Handlers.searchCommand, Handlers.handleSearch);
+    bot.onText(Handlers.updateHousingAreaCommand, Handlers.handleUpdateHousingArea);
+    bot.onText(Handlers.updateRentCommand, Handlers.handleUpdateRent);
+    bot.onText(Handlers.updateRoomsCommand, Handlers.handleUpdateRooms);
+    bot.onText(Handlers.updateSearchAreaCommand, Handlers.handleUpdateSearchAreaCommand);
+    bot.onText(Handlers.updateHomeTypesCommand, Handlers.handleUpdateHomeTypes);
+    bot.onText(Handlers.updateSearchFrequency, Handlers.handleUpdateSearchFrequency);
 
-        // 	bot.sendMessage('@brostadchannel', `
-        //
-        // 	`)
-            bot.sendMessage(chatId, `pollInterval ${pollInterval}.`);
-        }, pollInterval)
-    });
+    console.log('Brostad is born again.')
 
-    bot.onText(/\/clear (.+)/, (msg) => {
-        const chatId = msg.chat.id;
-        clearInterval(timer)
-        bot.sendMessage(chatId, `Cleared!`);
-    })
-    console.log('Done! Brostad is born again!')
-} catch (e) {
-    console.log('Cant initialize bot:')
+} catch(e) {
+    console.error('Something went wrong while reviving brostad. Hes dead jim!')
     console.error(e);
 }
