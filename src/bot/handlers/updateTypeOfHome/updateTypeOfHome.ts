@@ -8,7 +8,7 @@ export const updateHomeTypesCommand: RegExp = /\/house (.+)/
 export const handleUpdateHomeTypes = (msg: Message, match: RegExpExecArray | null) => {
     const chatId = msg.chat.id;
     const typesOfHome = match[1];
-    const currentFilters = searchFilters.updateSearchArea(typesOfHome)
+    const currentFilters = searchFilters.updateHomeTypes(typesOfHome)
     bot.sendMessage(chatId, `<pre><code>${JSON.stringify(currentFilters, null, 4)}</code></pre>`, {
         parse_mode: 'HTML'
     })

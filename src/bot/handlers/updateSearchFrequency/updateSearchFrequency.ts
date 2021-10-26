@@ -16,8 +16,15 @@ export const handleUpdateSearchFrequency = (msg: Message, match: RegExpExecArray
         bot.sendMessage(chatId, `Can't deal with negative numbers man`)
     }
     else {
-        searchFrequencyMilliseconds = searchFrequencyMinutes*60*1000;
-        job.updateMilliseconds(searchFrequencyMilliseconds)
-        bot.sendMessage(chatId, `${job.getMilliseconds()} miliseconds`)
+        try {
+            searchFrequencyMilliseconds = searchFrequencyMinutes*60*1000;
+            job.updateMilliseconds(searchFrequencyMilliseconds)
+            job.restart();
+            bot.sendMessage(chatId, `<pre><code>${JSON.stringify(job, null, 4)}</code></pre>`,{
+                parse_mode: "HTML",
+            })
+        } catch (e) {
+            console.error(e)
+        }
     }
 }

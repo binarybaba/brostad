@@ -8,7 +8,7 @@ export const handleGetJobState = (msg: Message) => {
   const chatId = msg.chat.id;
   bot.sendMessage(
     chatId,
-    `<pre><code>${JSON.stringify(job, null, 4)}</code></pre>`,
+    `<pre><code>${JSON.stringify(job.state(), null, 4)}</code></pre>`,
     {
       parse_mode: "HTML",
     }

@@ -3,7 +3,7 @@ import bot from "./bot/getBot";
 
 
 try {
-    bot.onText(Handlers.searchCommand, Handlers.handleSearch);
+    bot.onText(Handlers.helpCommand, Handlers.handleHelp);
     bot.onText(Handlers.updateHousingAreaCommand, Handlers.handleUpdateHousingArea);
     bot.onText(Handlers.updateRentCommand, Handlers.handleUpdateRent);
     bot.onText(Handlers.updateRoomsCommand, Handlers.handleUpdateRooms);
@@ -12,6 +12,10 @@ try {
     bot.onText(Handlers.updateSearchFrequency, Handlers.handleUpdateSearchFrequency);
     bot.onText(Handlers.getFiltersCommand, Handlers.handleGetFilters);
     bot.onText(Handlers.getJobStateCommand, Handlers.handleGetJobState);
+    bot.onText(Handlers.startJobCommand, Handlers.handleStartJob);
+    bot.onText(Handlers.stopJobCommand, Handlers.handleStopJob);
+    bot.onText(Handlers.resetJobCommand, Handlers.handleResetJob);
+    bot.onText(Handlers.hardResetCommand, Handlers.handleHardResetJob);
 
     console.log('Brostad is born again.')
 
