@@ -10,6 +10,8 @@ try {
     bot.onText(Handlers.updateSearchAreaCommand, Handlers.handleUpdateSearchAreaCommand);
     bot.onText(Handlers.updateHomeTypesCommand, Handlers.handleUpdateHomeTypes);
     bot.onText(Handlers.updateSearchFrequency, Handlers.handleUpdateSearchFrequency);
+    bot.onText(Handlers.getFiltersCommand, Handlers.handleGetFilters);
+    bot.onText(Handlers.getJobStateCommand, Handlers.handleGetJobState);
 
     console.log('Brostad is born again.')
 
