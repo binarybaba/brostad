@@ -16,6 +16,7 @@ try {
     bot.onText(Handlers.stopJobCommand, Handlers.handleStopJob);
     bot.onText(Handlers.resetJobCommand, Handlers.handleResetJob);
     bot.onText(Handlers.hardResetCommand, Handlers.handleHardResetJob);
+    bot.onText(Handlers.echoCommand, Handlers.handleEcho);
 
     console.log('Brostad is born again.')
 
